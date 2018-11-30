@@ -77,7 +77,7 @@ public class LoginController {
         }
         Random rand = new Random();
         token = String.valueOf(rand.nextInt(10000000) + 10000000);
-        userModel.setToken(token);
+        userModelResponse.setToken(token);
         System.out.println("新创建的token : " + token);
         redisCacheManager.set(userId, token, 500);
         return userModelResponse;
@@ -100,6 +100,14 @@ public class LoginController {
             System.out.println("token : " + token);
             redisCacheManager.set(userId, token, 500);
         }
+        return userModel;
+    }
+
+    @RequestMapping(value = "/updateUser", method = RequestMethod.POST)
+    public @ResponseBody
+    UserModel updateUser(UserModel userModel) {
+        userService.updateUserInfo(userModel);
+        userModel.setPassword(null);
         return userModel;
     }
 

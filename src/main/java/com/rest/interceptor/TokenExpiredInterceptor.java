@@ -11,7 +11,6 @@ import java.io.PrintWriter;
 
 public class TokenExpiredInterceptor implements HandlerInterceptor {
 
-
     @Autowired
     private RedisCacheManager redisCacheManager;
 
@@ -24,17 +23,23 @@ public class TokenExpiredInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String userId = request.getParameter("userId");
-        String token = (String) redisCacheManager.get(userId);
-        if (userId == null) {
-            response.setCharacterEncoding("utf-8");
-            response.setContentType("application/json; charset=utf-8");
-            PrintWriter writer = response.getWriter();
-            String result = "{\"stateCode\":400;\"errorMassage\":\"token过期\";\"result\":null}";
-            writer.write(result);
-            return false;
+        String token = request.getParameter("token");
+        if (userId != null && token != null) {
+            String tokenCache = (String) redisCacheManager.get(userId);
+            if (token.equals(tokenCache)) {
+                return true;
+            } else {
+                response.setCharacterEncoding("utf-8");
+                response.setContentType("application/json; charset=utf-8");
+                PrintWriter writer = response.getWriter();
+                String result = "{\"stateCode\":400;\"errorMassage\":\"token过期\";\"result\":null}";
+                writer.write(result);
+                return false;
+            }
         } else {
             return true;
         }
+
     }
 
     /**
@@ -47,8 +52,9 @@ public class TokenExpiredInterceptor implements HandlerInterceptor {
     @Override
     public void postHandle(HttpServletRequest request,
                            HttpServletResponse response, Object handler,
-                           ModelAndView modelAndView) throws Exception {
-
+                           ModelAndView modelAndView) {
+        int status = response.getStatus();
+        System.out.println("===============status :  " + status);
     }
 
     /**
@@ -57,8 +63,7 @@ public class TokenExpiredInterceptor implements HandlerInterceptor {
      */
     @Override
     public void afterCompletion(HttpServletRequest request,
-                                HttpServletResponse response, Object handler, Exception ex)
-            throws Exception {
+                                HttpServletResponse response, Object handler, Exception ex) {
         // TODO Auto-generated method stub
 
     }

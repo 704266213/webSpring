@@ -30,4 +30,17 @@
         </where>
     </select>
 
+    <update id="updateUserInfo" parameterType="com.rest.model.UserModel">
+        update user
+        <set>
+            <if test="userName != null">userName=#{userName},</if>
+            <if test="password != null">password=#{password},</if>
+            <if test="phone != null">phone=#{phone},</if>
+            <if test="sex != -1">sex=#{sex}</if>
+            <if test="headUrl != null">headUrl=#{headUrl}</if>
+            <if test="mail != null">mail=#{mail}</if>
+        </set>
+        where userId=#{userId}
+    </update>
+
 </mapper>

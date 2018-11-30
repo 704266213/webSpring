@@ -20,10 +20,19 @@ public interface UserMapper {
     UserModel getUserById(int userId);
 
     /**
-     * 根据用户id获取用户
+     * 用户登陆
      *
      * @param user
      * @return
      */
     UserModel login(UserModel user);
+
+    /**
+     * 修改用户
+     *
+     * @param user
+     * @return
+     */
+    void updateUserInfo(UserModel user);
+
 }

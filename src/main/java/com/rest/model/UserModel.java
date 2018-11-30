@@ -7,7 +7,7 @@ public class UserModel {
     private String userName;
     private String password;
     private String phone;
-    private int sex;
+    private int sex = -1;
     private String headUrl;
     private String mail;
 

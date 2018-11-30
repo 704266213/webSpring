@@ -34,4 +34,9 @@ public class UserServiceImpl implements UserService {
     public UserModel login(UserModel userModel) {
         return userMapper.login(userModel);
     }
+
+    @Override
+    public void updateUserInfo(UserModel user) {
+        userMapper.updateUserInfo(user);
+    }
 }
