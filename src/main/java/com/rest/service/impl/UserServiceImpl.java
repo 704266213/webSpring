@@ -1,10 +1,8 @@
 package com.rest.service.impl;
 
-import com.rest.dao.UserDao;
-import com.rest.dao.mapping.UserMapper;
+import com.rest.dao.UserMapper;
 import com.rest.model.UserModel;
 import com.rest.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -17,8 +15,6 @@ public class UserServiceImpl implements UserService {
      * 使用@Autowired注解标注userMapper变量，
      * 当需要使用UserMapper时，Spring就会自动注入UserMapper
      */
-//    @Resource
-//    private UserDao userDao;//注入dao
 
 
     @Resource
@@ -26,13 +22,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void addUser(UserModel user) {
-        System.out.println("============userDao===========" + userMapper);
         userMapper.addUser(user);
     }
 
     @Override
-    public UserModel getUserById(String userId) {
-//        return userDao.getUserById(userId);
-        return null;
+    public UserModel getUserById(int userId) {
+        return userMapper.getUserById(userId);
+    }
+
+    @Override
+    public UserModel login(UserModel userModel) {
+        return userMapper.login(userModel);
     }
 }

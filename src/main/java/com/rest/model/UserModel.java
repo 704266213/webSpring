@@ -3,6 +3,7 @@ package com.rest.model;
 public class UserModel {
 
     private String userId;
+    private String token;
     private String userName;
     private String password;
     private String phone;
@@ -13,7 +14,7 @@ public class UserModel {
     public UserModel() {
     }
 
-    public UserModel(String userId, String userName, String password, String phone, int sex, String headUrl, String mail) {
+    public UserModel(String userId, String userName, String password, String token, String phone, int sex, String headUrl, String mail) {
         this.userId = userId;
         this.userName = userName;
         this.password = password;
@@ -21,6 +22,7 @@ public class UserModel {
         this.sex = sex;
         this.headUrl = headUrl;
         this.mail = mail;
+        this.token = token;
     }
 
     public String getUserName() {
@@ -77,5 +79,13 @@ public class UserModel {
 
     public void setMail(String mail) {
         this.mail = mail;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

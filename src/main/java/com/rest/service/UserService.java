@@ -17,5 +17,13 @@ public interface UserService {
      * @param userId
      * @return
      */
-    UserModel getUserById(String userId);
+    UserModel getUserById(int userId);
+
+    /**
+     * 根据用户id获取用户
+     *
+     * @param userModel
+     * @return
+     */
+    UserModel login(UserModel userModel);
 }

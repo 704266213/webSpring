@@ -1,4 +1,4 @@
-package com.rest.dao.mapping;
+package com.rest.dao;
 
 import com.rest.model.UserModel;
 
@@ -17,5 +17,13 @@ public interface UserMapper {
      * @param userId
      * @return
      */
-    UserModel getUserById(String userId);
+    UserModel getUserById(int userId);
+
+    /**
+     * 根据用户id获取用户
+     *
+     * @param user
+     * @return
+     */
+    UserModel login(UserModel user);
 }

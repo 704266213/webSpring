@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rest.dao.UserMapper">
+
+    <!--id应该是接口中的方法，结果类型如没有配置别名则应该使用全名称 -->
+    <insert id="addUser">
+        <selectKey resultType="java.lang.String" order="AFTER" keyProperty="userId">
+            SELECT LAST_INSERT_ID() AS id
+        </selectKey>
+        insert into user(userName,password,phone,sex,headUrl,mail)
+        values(#{userName},#{password},#{phone},#{sex},#{headUrl},#{mail})
+    </insert>
+
+    <select id="getUserById" resultType="com.rest.model.UserModel">
+        select userId,userName,phone,sex,headUrl,mail from user where userId=#{userId}
+    </select>
+
+    <select id="login" parameterType="com.rest.model.UserModel" resultType="com.rest.model.UserModel">
+        select userId,userName,phone,sex,headUrl,mail from user
+        <where>
+            <if test="userName != null">
+                userName = #{userName}
+            </if>
+            <if test="phone != null">
+                AND phone = #{phone}
+            </if>
+            <if test="password != null">
+                AND password = #{password}
+            </if>
+        </where>
+    </select>
+
+</mapper>

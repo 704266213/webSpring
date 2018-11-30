@@ -12,7 +12,7 @@
                            http://www.springframework.org/schema/context
                            http://www.springframework.org/schema/context/spring-context-4.3.xsd">
 
-    <context:property-placeholder ignore-unresolvable="true" location="/WEB-INF/db.properties"/>
+    <context:property-placeholder ignore-unresolvable="true" location="classpath:db.properties"/>
     <!-- ========================================配置数据源========================================= -->
     <!-- 配置数据源，使用的是alibaba的Druid(德鲁伊)数据源 -->
     <bean name="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
@@ -62,12 +62,13 @@
         value="classpath:com/rest/dao/mapping/*.xml"指的是classpath(类路径)下com/rest/dao/mapping包中的所有xml文件
         UserMapper.xml位于com/rest/dao/mapping包下，这样UserMapper.xml就可以被自动扫描
          -->
-        <property name="mapperLocations" value="classpath:com/rest/dao/mapping/*Mapper.xml"/>
+        <property name="mapperLocations" value="classpath:/com/rest/mapping/*.xml"/>
+        <property name="configLocation" value="classpath:/mybatis-config.xml"></property>
     </bean>
     <!-- 配置扫描器 -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <!-- 扫描com.rest.dao.mapping这个包以及它的子包下的所有映射接口类 -->
-        <property name="basePackage" value="com.rest.dao.mapping"/>
+        <property name="basePackage" value="com.rest.dao"/>
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>
 
@@ -142,7 +143,7 @@
         <property name="jobDetail" ref="springQtzJobMethod"></property>
 
         <!-- cron表达式，执行时间  每5秒执行一次 -->
-        <property name="cronExpression" value="0/5 * * * * ?"></property>
+        <property name="cronExpression" value="0/30 * * * * ?"></property>
     </bean>
 
     <!-- 配置调度工厂  总管理类,启动触发器的配置, 如果将lazy-init='false'那么容器启动就会执行调度程序 -->
